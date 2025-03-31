@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun Balqis!</title>
+    <style>
+        body {
+            background-color: #f8d7e3;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: #6a1b4d;
+            overflow: hidden;
+            position: relative;
+        }
+        h1 {
+            font-size: 2.5em;
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards;
+            position: relative;
+            z-index: 10;
+        }
+        .message {
+            font-size: 1.5em;
+            opacity: 0;
+            animation: fadeIn 3s ease-in forwards 1s;
+            position: relative;
+            z-index: 10;
+        }
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkleAnim 3s infinite;
+        }
+        .random-image {
+            position: absolute;
+            width: 80px;
+            height: auto;
+        }
+        .bottom-text {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes sparkleAnim {
+            0% { transform: translateY(0px); opacity: 1; }
+            100% { transform: translateY(-100px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bg-music" loop>
+        <source src="background-music.mp3" type="audio/mpeg">
+    </audio>
+    <h1>Horeee Selamat Ulang Tahun</h1>
+    <p class="message">Sehat-Sehat Balqiss</p>
+    <p class="bottom-text">emang gitu liriknya kocak</p>
+    <script>
+        document.addEventListener("click", function() {
+            let audio = document.getElementById("bg-music");
+            let context = new (window.AudioContext || window.webkitAudioContext)();
+            let source = context.createMediaElementSource(audio);
+            source.connect(context.destination);
+            audio.play();
+        }, { once: true });
+
+        function createSparkle() {
+            console.log("Creating sparkle");
+            const sparkle = document.createElement("div");
+            sparkle.classList.add("sparkle");
+            document.body.appendChild(sparkle);
+            
+            sparkle.style.left = Math.random() * window.innerWidth + "px";
+            sparkle.style.top = Math.random() * window.innerHeight + "px";
+            
+            setTimeout(() => {
+                console.log("Removing sparkle");
+                sparkle.remove();
+            }, 3000);
+        }
+        setInterval(createSparkle, 500);
+
+        function placeRandomImages() {
+            const placedPositions = [];
+            for (let i = 0; i < 5; i++) {
+                let left, top, overlap;
+                do {
+                    left = Math.random() * (window.innerWidth - 100);
+                    top = Math.random() * (window.innerHeight - 100);
+                    overlap = placedPositions.some(pos => 
+                        Math.abs(pos.left - left) < 100 && Math.abs(pos.top - top) < 100);
+                } while (overlap || (top < 200));
+                
+                console.log("Placing random image", i);
+                const img = document.createElement("img");
+                img.src = "image-source.png";
+                img.classList.add("random-image");
+                img.style.left = left + "px";
+                img.style.top = top + "px";
+                document.body.appendChild(img);
+                placedPositions.push({ left, top });
+            }
+        }
+        placeRandomImages();
+    </script>
+</body>
+</html>
