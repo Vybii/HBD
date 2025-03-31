@@ -40,14 +40,7 @@
             width: 80px;
             height: auto;
         }
-        .bottom-text {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.2em;
-            font-weight: bold;
-        }
+        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -64,15 +57,13 @@
     </audio>
     <h1>Horeee Selamat Ulang Tahun</h1>
     <p class="message">Sehat-Sehat Balqiss</p>
-    <p class="bottom-text">emang gitu liriknya kocak</p>
     <script>
         document.addEventListener("click", function() {
-            let audio = document.getElementById("bg-music");
-            let context = new (window.AudioContext || window.webkitAudioContext)();
-            let source = context.createMediaElementSource(audio);
-            source.connect(context.destination);
+        let audio = document.getElementById("bg-music");
+        if (audio.paused) {
             audio.play();
-        }, { once: true });
+            }
+        });
 
         function createSparkle() {
             console.log("Creating sparkle");
